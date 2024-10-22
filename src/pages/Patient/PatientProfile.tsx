@@ -10,7 +10,7 @@ import axios from "axios";
 import { PatientProfile } from "../../types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../UserContextProvider";
-import { formatDate } from "../../Utils";
+
 const Container = styled.div`
     #main-img {
         height: 100dvh;
