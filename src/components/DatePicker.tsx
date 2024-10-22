@@ -66,7 +66,7 @@ const CustomDateCalendar = styled(DateCalendar)`
   }
 `;
 
-export default function DatePicker({ handler, weekdays=[] } : {handler: (value?: any) => void, weekdays?: number[]}) {
+export default function DatePicker({ handler, weekdays=[], pastDisabled=false } : {handler: (value?: any) => void, weekdays?: number[], pastDisabled?: boolean}) {
   const [selectedDate, setSelectedDate] = React.useState<Dayjs | null>(null);
   const [currentView, setCurrentView] = React.useState('day');
   const handleViewChange = (newView: DateView) => {
@@ -92,7 +92,7 @@ export default function DatePicker({ handler, weekdays=[] } : {handler: (value?:
       onChange={handleDateChange} 
       shouldDisableDate={shouldDisabled}
       onViewChange={handleViewChange}
-      minDate={dayjs()}
+      minDate={pastDisabled ? dayjs() : undefined}
       className='calendar' 
       />
     </LocalizationProvider>

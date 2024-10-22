@@ -1,9 +1,7 @@
 import styled from "styled-components"
-// import  Doctor  from "../../assets/images/doctors/admin.png";
 import { Table } from "../../components/ui/table";
 import ItemCard from "../../components/ui/item-card";
 import DropdownInput from "../../components/ui/dropdown-input";
-import Dropdown from "../../components/ui/dropdown";
 import Input from "../../components/ui/input";
 import SearchIcon from "../../assets/icons/search.svg";
 import Button from "../../components/ui/button";
@@ -21,6 +19,7 @@ const Container = styled.div`
     top: 90px;
     left: 8%;
     font-size: 14px;
+    padding-bottom: 30px;
     .specialty-group {
         display: flex;
         gap: 8px;
@@ -103,11 +102,7 @@ const Container = styled.div`
 
 
 `
-const status = [
-    {name: "Tai Mũi Họng"},
-    {name: "Thần Kinh"},
-    {name: "Tiêu Hóa"}
-]
+
 export default function DoctorAdmin() {
     const [specialty, setSpecialty] = useState<string>();
     const [modal, setModal] = useState<string>();
@@ -115,7 +110,6 @@ export default function DoctorAdmin() {
     const [doctor, setDoctor] = useState<Doctor>();
     const [name, setName] = useState<string>();
     const [filterRemoved, setFilterRemoved] = useState<boolean>(false);
-    console.log(modal)
     useEffect(() => {
         getDoctors()
     }, [specialty, name])
@@ -213,8 +207,8 @@ export default function DoctorAdmin() {
                     </tbody>
                 </Table>
             </section>
-            {modal === "doctor" && !doctor && <DoctorModal handleClose={() => {setModal(""); getDoctors()}}/>}
-            {modal === "doctor" && doctor && <DoctorModal doctor={doctor} handleClose={() => {setModal(""); getDoctors()}}/>}
+            {modal === "doctor" && !doctor && <DoctorModal handleClose={() => {setModal(""); getDoctors()}} sideTask={getDoctors()}/>}
+            {modal === "doctor" && doctor && <DoctorModal doctor={doctor} handleClose={() => {setModal("")}} sideTask={getDoctors()}/>}
             {modal === "shifts" && doctor && <ShiftModal doctor={doctor} handleClose={() => setModal("")}/>}
         </Container>
     )

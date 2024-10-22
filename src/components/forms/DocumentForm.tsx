@@ -30,7 +30,7 @@ type Document = {
     documentName: string,
     document: File
 }
-export default function DocumentForm({ profileId }: { profileId: string}) {
+export default function DocumentForm({ profileId, onClick }: { profileId: string, onClick: () => void}) {
     const { handleSubmit, control, setValue } = useForm<Document>();
     const onSubmit = async (data: Document) => {
         try {
@@ -43,7 +43,10 @@ export default function DocumentForm({ profileId }: { profileId: string}) {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            // if (response.status === 200) 
+            if (response.status === 200) {
+                console.log(onClick)
+                onClick();
+            }
         }
         catch(error) {
             console.log((error as AxiosError).message)
@@ -58,10 +61,7 @@ export default function DocumentForm({ profileId }: { profileId: string}) {
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                      }: {
+                        field}: {
                         field: ControllerRenderProps<Document, 'documentName'>,
                         fieldState: ControllerFieldState,
                         formState: UseFormStateReturn<Document>

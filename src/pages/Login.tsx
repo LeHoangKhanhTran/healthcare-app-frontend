@@ -20,10 +20,11 @@ export const Container = styled.div`
     }
 `
 export default function Login({ setRole }: {setRole: React.Dispatch<React.SetStateAction<string | undefined>>}) {
-  const { control, handleSubmit } =  useForm<LoginInput>();
+  const { control, handleSubmit, formState, getValues } =  useForm<LoginInput>();
   const { setUser } = useUserContext();
   const navigate = useNavigate();
   const onSubmit = async (data: LoginInput) => {
+    console.log(data  )
     try {
       const response = await axios.post(`${config.apiUrl}/User/login`, data, {withCredentials: true, headers: { "Content-Type": "application/json" }});
       if (response.status === 200) {
@@ -44,7 +45,7 @@ export default function Login({ setRole }: {setRole: React.Dispatch<React.SetSta
   return (
     <Container>
       <div className="form">
-        <LoginForm control={control} onClick={handleSubmit(onSubmit)}/>
+        <LoginForm control={control} onClick={handleSubmit(onSubmit)} formState={formState} getValues={getValues}/>
       </div>
       <img id="main-img" src={Image}/>
     </Container>

@@ -6,9 +6,9 @@ import Textarea from "../ui/textarea";
 import FileUploader from "../FileUploader";
 import ItemCard from "../ui/item-card";
 import SearchIcon from "../../assets/icons/search.svg";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Controller, ControllerFieldState, ControllerRenderProps, useForm, UseFormStateReturn } from "react-hook-form";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import config from "../../Config";
 import { Doctor, Specialty } from "../../types";
 const Wrapper = styled.div`
@@ -57,12 +57,6 @@ const Wrapper = styled.div`
     }
 `
 
-const list3 = [
-    {name: "Thần kinh"},
-    {name: "Thần kinh"},
-    {name: "Thần kinh"}
-]
-
 export type DoctorInfo = {
     name: string,
     specialties: string[],
@@ -71,7 +65,7 @@ export type DoctorInfo = {
 }
 
 
-export default function DoctorForm({ doctor }: { doctor?: Doctor}) {
+export default function DoctorForm({ doctor, onClick }: { doctor?: Doctor, onClick: () => void}) {
     const [specialties, setSpecialties] = useState<string[]>([]);
     const { handleSubmit, control, setValue } = useForm<DoctorInfo>({
         defaultValues: doctor ? {
@@ -111,6 +105,7 @@ export default function DoctorForm({ doctor }: { doctor?: Doctor}) {
                     },
                 });
             }
+            onClick();
     
         } catch (error) {
             console.error(error);
@@ -124,10 +119,7 @@ export default function DoctorForm({ doctor }: { doctor?: Doctor}) {
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                        }: {
+                        field}: {
                             field: ControllerRenderProps<DoctorInfo, 'name'>,
                             fieldState: ControllerFieldState,
                             formState: UseFormStateReturn<DoctorInfo>
@@ -159,10 +151,7 @@ export default function DoctorForm({ doctor }: { doctor?: Doctor}) {
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                        }: {
+                        field}: {
                             field: ControllerRenderProps<DoctorInfo, 'doctorInfo'>,
                             fieldState: ControllerFieldState,
                             formState: UseFormStateReturn<DoctorInfo>

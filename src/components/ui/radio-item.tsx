@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div<{checked: boolean}>`
@@ -57,16 +56,16 @@ export interface RadioItemProps {
 }
 
 export default function RadioItem({ name, value, handleChange, checked } : RadioItemProps) {
-    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        // const items = document.getElementsByClassName(`${name}-radio`);
-        // Array.from(items).forEach((e) => {
-        //     (e as HTMLElement).style.background = "var(--input-bg-color)";  
-        // });
-        // ((event.target as HTMLElement).parentElement as HTMLElement).style.background = "var(--primary-bg-color)";
-    }
+    // const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    //     const items = document.getElementsByClassName(`${name}-radio`);
+    //     Array.from(items).forEach((e) => {
+    //         (e as HTMLElement).style.background = "var(--input-bg-color)";  
+    //     });
+    //     ((event.target as HTMLElement).parentElement as HTMLElement).style.background = "var(--primary-bg-color)";
+    // }
     return (
-        <Wrapper checked={checked} onClick={(e) => handleClick(e)} className={name + "-radio"}>
-            <RadioButton type="radio" name={name} value={value} onChange={handleChange} checked={checked}/>
+        <Wrapper checked={checked} className={name + "-radio"} onClick={handleChange}>
+            <RadioButton type="radio" name={name} value={value}  checked={checked}/>
             <RadioButtonLabel/>
             <div>{value}</div>
         </Wrapper>

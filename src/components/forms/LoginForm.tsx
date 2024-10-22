@@ -4,8 +4,9 @@ import EmailIcon from "../../assets/icons/email.svg";
 import PhoneIcon from "../../assets/icons/phone.svg";
 import Button from "../ui/button";
 import PasswordIcon from "../../assets/icons/password.svg"
-import { Control, Controller, ControllerFieldState, ControllerRenderProps, useForm, UseFormHandleSubmit, UseFormStateReturn } from "react-hook-form";
+import { Control, Controller, ControllerFieldState, ControllerRenderProps, FormState, UseFormGetValues, UseFormStateReturn } from "react-hook-form";
 import { LoginInput } from "../../types";
+import { validateEmail, validatePhoneNumber } from "../../Utils";
 
 export const Wrapper = styled.div`
     header {
@@ -33,9 +34,23 @@ export const Wrapper = styled.div`
         margin-top: 40px;
     }
 `
-
-export default function LoginForm({control, onClick }: {control: Control<LoginInput>, onClick: () => void}) {
-    return (
+interface LoginFormProps {
+  control: Control<LoginInput>;
+  onClick: () => void;
+  formState: FormState<LoginInput>;
+  getValues: UseFormGetValues<LoginInput>;
+}
+export default function LoginForm({control, onClick, formState, getValues}: LoginFormProps) {
+  const validateOptionalEmail = (value: string) => {
+    if (value) validateEmail(value)
+    if (!value && !getValues("phoneNumber")) return "Phải cung cấp email hoặc số điện thoại"
+  }
+  const validateOptionalPhoneNumber = (value: string) => {
+    if (value) validatePhoneNumber(value)
+    if (!value && !getValues("email")) return "Phải cung cấp email hoặc số điện thoại"
+    return true;
+  }
+  return (
         <Wrapper>
             <header>
                 <h2>Xin chào,</h2>
@@ -46,10 +61,9 @@ export default function LoginForm({control, onClick }: {control: Control<LoginIn
                     name="email"
                     control={control}
                     defaultValue=""
+                    rules={{validate: validateOptionalEmail}}
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
+                        field                
                       }: {
                         field: ControllerRenderProps<LoginInput, 'email'>,
                         fieldState: ControllerFieldState,
@@ -62,6 +76,7 @@ export default function LoginForm({control, onClick }: {control: Control<LoginIn
                           labelText="Email"
                           placeholder="john_wales@gmail.com"
                           icon={EmailIcon}
+                          error={formState.errors.email?.message}
                         />
                       )}
                 />
@@ -69,10 +84,9 @@ export default function LoginForm({control, onClick }: {control: Control<LoginIn
                     name="phoneNumber"
                     control={control}
                     defaultValue=""
+                    rules={{validate: validateOptionalPhoneNumber}}
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
+                        field           
                       }: {
                         field: ControllerRenderProps<LoginInput, 'phoneNumber'>,
                         fieldState: ControllerFieldState,
@@ -85,6 +99,7 @@ export default function LoginForm({control, onClick }: {control: Control<LoginIn
                           labelText="Hoặc số điện thoại"
                           placeholder="0342 045 334"
                           icon={PhoneIcon}
+                          error={formState.errors.phoneNumber?.message}
                         />
                       )}
                 />
@@ -92,10 +107,9 @@ export default function LoginForm({control, onClick }: {control: Control<LoginIn
                     name="password"
                     control={control}
                     defaultValue=""
+                    rules={{ required: 'Mật khẩu phải được cung cấp' }}
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
+                        field              
                       }: {
                         field: ControllerRenderProps<LoginInput, 'password'>,
                         fieldState: ControllerFieldState,
@@ -107,6 +121,7 @@ export default function LoginForm({control, onClick }: {control: Control<LoginIn
                           label="password"
                           labelText="Mật khẩu"
                           icon={PasswordIcon}
+                          error={formState.errors.password?.message}
                         />
                       )}
                 />

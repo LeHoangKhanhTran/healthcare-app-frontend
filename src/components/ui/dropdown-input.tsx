@@ -58,7 +58,7 @@ export default function DropdownInput<T>({ type, icon, labelText, placeholder, d
     }, [searchTerm, getListUrl, items])
     
     useEffect(() => {
-        if (removeValue) setValue("")
+        if (removeValue) setValue(value ? value : "")
     }, [removeValue])
     const getItemList = async (transformFunc?: (list: T[]) => Item[]) => {
         try {
@@ -93,7 +93,7 @@ export default function DropdownInput<T>({ type, icon, labelText, placeholder, d
         if (type === "Bác sĩ") return searchTerm
         if ((type === "Loại tài liệu" || type === "Thứ" || type === "Tình trạng" || type === "Thứ tự") && itemList && value !== undefined && value !== null) {
             let target = itemList?.filter((item) => (item as Item).value === value)[0];
-            return (target as Item).name
+            return target ? (target as Item).name : ""
         }
         return value;
     } 
@@ -114,8 +114,10 @@ export default function DropdownInput<T>({ type, icon, labelText, placeholder, d
     }
 
     const getDoctorItem = () => {
-        const doctor = (itemList as DoctorItem[]).filter((item) => item.value === pickedValue)
-        if (doctor && doctor.length > 0) return {name: doctor[0].name, img: doctor[0].img}
+        if (itemList) {
+            const doctor = (itemList as DoctorItem[]).filter((item) => item.value === pickedValue)
+            if (doctor && doctor.length > 0) return {name: doctor[0].name, img: doctor[0].img}
+        }
         return {name: "", img: ""}
     }
     return (

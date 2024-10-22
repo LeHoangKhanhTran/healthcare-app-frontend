@@ -101,3 +101,8 @@ export type LoginInput = {
     phoneNumber: string,
     password: string
 }
+
+export interface ShiftTime {
+    shiftId: string,
+    time: string
+}

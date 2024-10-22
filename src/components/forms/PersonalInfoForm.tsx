@@ -6,8 +6,7 @@ import EmailIcon from "../../assets/icons/email.svg";
 import PhoneIcon from "../../assets/icons/phone.svg";
 import CalendarIcon from "../../assets/icons/calendar.svg";
 import { useState } from "react";
-import { Control, Controller, ControllerFieldState, ControllerRenderProps, useForm, UseFormGetValues, UseFormSetValue, UseFormStateReturn } from "react-hook-form";
-import Button from "../ui/button";
+import { Control, Controller, ControllerFieldState, ControllerRenderProps, UseFormGetValues, UseFormSetValue, UseFormStateReturn } from "react-hook-form";
 import { PatientProfileForm } from "../../pages/Patient/PatientProfile";
 import DatePicker from "../DatePicker";
 import { Dayjs } from "dayjs";
@@ -71,10 +70,7 @@ export default function PersonalInfoForm({ control, setValue, getValues } : { co
             control={control}
             defaultValue=""
             render={({
-                field,                    
-                fieldState: { error },   
-                formState                
-                }: {
+                field}: {
                     field: ControllerRenderProps<PatientProfileForm, 'fullName'>,
                     fieldState: ControllerFieldState,
                     formState: UseFormStateReturn<PatientProfileForm>
@@ -88,10 +84,7 @@ export default function PersonalInfoForm({ control, setValue, getValues } : { co
                     name="email"
                     control={control}
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                        }: {
+                        field}: {
                             field: ControllerRenderProps<PatientProfileForm, 'email'>,
                             fieldState: ControllerFieldState,
                             formState: UseFormStateReturn<PatientProfileForm>
@@ -104,10 +97,7 @@ export default function PersonalInfoForm({ control, setValue, getValues } : { co
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                        }: {
+                        field}: {
                             field: ControllerRenderProps<PatientProfileForm, 'phoneNumber'>,
                             fieldState: ControllerFieldState,
                             formState: UseFormStateReturn<PatientProfileForm>
@@ -136,10 +126,7 @@ export default function PersonalInfoForm({ control, setValue, getValues } : { co
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                        }: {
+                        field}: {
                             field: ControllerRenderProps<PatientProfileForm, 'address'>,
                             fieldState: ControllerFieldState,
                             formState: UseFormStateReturn<PatientProfileForm>
@@ -152,10 +139,7 @@ export default function PersonalInfoForm({ control, setValue, getValues } : { co
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                        }: {
+                        field}: {
                             field: ControllerRenderProps<PatientProfileForm, 'occupation'>,
                             fieldState: ControllerFieldState,
                             formState: UseFormStateReturn<PatientProfileForm>

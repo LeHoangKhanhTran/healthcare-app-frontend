@@ -13,7 +13,7 @@ const Wrapper = styled.div`
     border: 1px solid #FFFFFF14;
     display: flex;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
     gap: 10px;
     font-size: 12px;
     line-height: 18px;

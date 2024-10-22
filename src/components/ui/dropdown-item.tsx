@@ -1,7 +1,6 @@
 import styled from "styled-components"
-import Doctor from "../../assets/images/doctors/dr-cameron.png";
 import CheckIcon from "../../assets/icons/check.svg";
-import { purple } from "@mui/material/colors";
+
 
 export interface Item {
     name: string,

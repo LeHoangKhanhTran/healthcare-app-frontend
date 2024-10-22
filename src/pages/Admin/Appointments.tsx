@@ -5,15 +5,14 @@ import CancelledIcon from "../../assets/icons/cancelled.svg";
 import StatCard from "../../components/StatCard";
 import { Table } from "../../components/ui/table";
 import StatusBadge from "../../components/ui/status-badge";
-import  Doctor  from "../../assets/images/doctors/admin.png";
 import DropdownInput from "../../components/ui/dropdown-input";
-import Dropdown from "../../components/ui/dropdown";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import config from "../../Config";
 import { Appointment } from "../../types";
 import { formatDate } from "../../Utils";
 import CancelModal from "../../components/modals/CancelModal";
+import Button from "../../components/ui/button";
 const Container = styled.div`
     position: absolute;
     width: 84%;
@@ -21,7 +20,7 @@ const Container = styled.div`
     min-height: 400px;
     top: 90px;
     left: 8%;
-
+    padding-bottom: 30px;
     h2 {
         font-size: 1.6rem;
         font-weight: 700;
@@ -73,7 +72,6 @@ const Container = styled.div`
     }
 
     .filter {
-        /* position: absolute;  */
         right: 0;
         margin-top: 30px;
         display: flex;
@@ -115,10 +113,11 @@ const defaultStats = {
 export default function AppointmentAdmin() {
     const [appointments, setAppointments] = useState<Appointment[]>();
     const [order, setOrder] = useState<"asc" | "desc">("desc");
-    const [statusFilter, setStatusFilter] = useState<"Scheduled" | "Pending" | "Cancelled">();
+    const [statusFilter, setStatusFilter] = useState<"Scheduled" | "Pending" | "Cancelled" | undefined>(undefined);
     const [stats, setStats] = useState<{[key: string]: number}>(defaultStats);
     const [modal, setModal] = useState<string>();
     const [appointment, setAppointment] = useState<Appointment>();
+    const [filterRemoved, setFilterRemoved] = useState<boolean>(false);
     useEffect(() => {
         getStats();
     }, [])
@@ -126,6 +125,7 @@ export default function AppointmentAdmin() {
     useEffect(() => {
         getAppointments()
     }, [order, statusFilter])
+
     const getStats = () => {
         try {
             const scheduledRequest = axios.get(`${config.apiUrl}/Appointment/0/count`)
@@ -177,6 +177,12 @@ export default function AppointmentAdmin() {
         setAppointment(appointment);
         setModal("cancel")
     }
+
+    const removeFilter = () => {
+        setOrder("desc");
+        setStatusFilter(undefined);
+        setFilterRemoved(true);
+    }
     return (
         <Container>
             {/* <h2>Xin chào, Admin</h2> */}
@@ -188,10 +194,13 @@ export default function AppointmentAdmin() {
             <section className="filter">
                 <p>Lọc theo:</p>
                 <div>
-                    <DropdownInput type="Thứ tự" items={timeOrder} label="appointmentTime" labelText="Thời gian đặt khám" disabled={true} handlePick={(value: any) => {setOrder(value)}} value="desc"/>
+                    <DropdownInput type="Thứ tự" items={timeOrder} label="appointmentTime" labelText="Thời gian đặt khám" disabled={true} handlePick={(value: any) => {setOrder(value)}} value="desc" removeValue={filterRemoved}/>
                 </div>
                 <div>
-                    <DropdownInput type="Tình trạng" items={status} label="appointmentStatus" labelText="Tình trạng lịch khám" disabled={true} handlePick={(value: any) => {setStatusFilter(value)}} placeholder="Chọn tình trạng"/>
+                    <DropdownInput type="Tình trạng" items={status} label="appointmentStatus" labelText="Tình trạng lịch khám" disabled={true} handlePick={(value: any) => {setStatusFilter(value)}} placeholder="Chọn tình trạng" removeValue={filterRemoved}/>
+                </div>
+                <div style={{display: "flex", alignItems: "end", minWidth: "140px"}}>
+                    <Button type="danger" onClick={removeFilter}>Bỏ lọc</Button>
                 </div>
             </section>
             <section className="table">

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import DropdownInput from "../ui/dropdown-input";
-import Doctor1 from "../../assets/images/doctors/dr-sharma.png";
 import Textarea from "../ui/textarea";
 import Button from "../ui/button";
 import CalendarIcon from "../../assets/icons/calendar.svg";
@@ -47,7 +46,7 @@ const Wrapper = styled.div`
     }
 `
 
-export default function AppointmentForm() {
+export default function AppointmentForm({ doctorId }: { doctorId?: string }) {
     const { user, loading } = useUserContext();
     const { handleSubmit, control, setValue } = useForm<FormAppointment>({defaultValues: {patientId: "3c69e909-380d-4ae8-aa47-2d60379728fc"}});
     const [specialty, setSpecialty] = useState<string>();
@@ -56,6 +55,7 @@ export default function AppointmentForm() {
     const [date, setDate] = useState<string>();
     const [weekday, setWeekday] = useState<number>();
     const navigate = useNavigate();
+    console.log(doctorId)
     const getSpecialtyUrl = (searchTerm: string) => {
         return `${config.apiUrl}/Specialty${searchTerm ? `?SpecialtyName=${searchTerm}` : ''}`
     }
@@ -117,21 +117,18 @@ export default function AppointmentForm() {
             </header>
             <main>
                  <DropdownInput getListUrl={getSpecialtyUrl} icon={SearchIcon} type="Chuyên khoa" label="Specialty" 
-                labelText="Chuyên khoa" placeholder="Chọn chuyên khoa" handlePick={(value: string, list?: Specialty[]) => setSpecialty(value)}
+                labelText="Chuyên khoa" placeholder="Chọn chuyên khoa" handlePick={(value: string) => setSpecialty(value)}
                 transformFunction={(list: Specialty[]) => {return list.map((item) => {return {name: item.name}})}}/> 
                  <DropdownInput getListUrl={getDoctorUrl} icon={SearchIcon} type="Bác sĩ" label="Doctor" labelText="Bác sĩ" 
                 placeholder="Chọn bác sĩ" transformFunction={(list: Doctor[]) => {return list.map(item => {return {name: item.name, img: item.imageUrl, value: item.doctorId}})}}
-                handlePick={handlePickDoctor}/>
+                handlePick={handlePickDoctor} value={doctorId ? doctorId : undefined}/>
                 <section className="flex-container">
                     <Controller
                     name="reason"
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                      }: {
+                        field}: {
                         field: ControllerRenderProps<FormAppointment, 'reason'>,
                         fieldState: ControllerFieldState,
                         formState: UseFormStateReturn<FormAppointment>
@@ -144,10 +141,7 @@ export default function AppointmentForm() {
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                      }: {
+                        field}: {
                         field: ControllerRenderProps<FormAppointment, 'note'>,
                         fieldState: ControllerFieldState,
                         formState: UseFormStateReturn<FormAppointment>

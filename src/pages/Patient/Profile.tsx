@@ -102,10 +102,9 @@ export default function Profile() {
         if (!loading) {
             console.log(user)
             if (user && user.profileId) getProfile(user.profileId);
-            else if (user && !user.profileId) navigate("/profile")
-            else navigate("/login")
+            else if (!user) navigate("/login")
         }
-    }, [loading, user])
+    }, [loading, user, user?.profileId])
     const getProfile = async (profileId: string) => {
         try {
             const response = await axios.get(`${config.apiUrl}/PatientProfile/${profileId}`);
@@ -133,7 +132,7 @@ export default function Profile() {
             console.log(error)
         }
     } 
-  
+
     if (profile) 
         return (
             <>
@@ -150,7 +149,7 @@ export default function Profile() {
                                     </section>
                                     <section>
                                         <div className="field">Ngày sinh:</div>
-                                        <p>{formatDate(profile.dateOfBirth)}</p>
+                                        <p>{profile.dateOfBirth}</p>
                                     </section>
                                     <section>
                                         <div className="field">Giới tính:</div>
@@ -222,7 +221,7 @@ export default function Profile() {
                         <Button onClick={() => {setModal("document")}}>Thêm tài liệu</Button>
                     </Container>
                 </Wrapper>
-                {modal === "document" && <DocumentModal profileId={profile.patientProfileId} handleClose={() => setModal("")}/>}
+                {modal === "document" && <DocumentModal profileId={profile.patientProfileId} handleClose={() => {setModal("")}} sideTask={getProfile(profile.patientProfileId)}/>}
             </>
         )
     }

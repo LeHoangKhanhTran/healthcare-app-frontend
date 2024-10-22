@@ -11,6 +11,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     max-height: 95vh;
+    z-index: 1000;
     h2 {    
         font-weight: 600;
         font-size: 1.3rem;

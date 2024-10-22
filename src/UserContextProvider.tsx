@@ -19,6 +19,7 @@ export const UserProvider: React.FC<{ children: ReactNode, setUserRole: React.Di
       }
     } 
     catch (error) {
+      console.log(error)
       setUser(null)
       console.log("No user.");
     }

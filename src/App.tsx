@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import GlobalStyle from "./GlobalStyle"
 import Login from "./pages/Login"
 import LogoIcon from "./assets/icons/logo-full.svg"
@@ -6,7 +6,7 @@ import Register from "./pages/Patient/Register"
 import Appointment from "./pages/Patient/Appointment"
 import Success from "./pages/Patient/Success"
 import AppointmentAdmin from "./pages/Admin/Appointments"
-import DoctorAdmin from "./pages/Admin/Doctor"
+import DoctorAdmin from "./pages/Admin/Doctors"
 import PatientProfileAdmin from "./pages/Admin/PatientProfile"
 import AppointmentHistory from "./pages/Patient/History"
 import Profile from "./pages/Patient/Profile"
@@ -16,6 +16,8 @@ import { useState } from "react"
 import UserIcon from "./assets/icons/user.svg";
 import axios from "axios"
 import config from "./Config"
+import Home from "./pages/Home"
+import DoctorDetails from "./pages/DoctorDetails"
 function App() {
   const [role, setRole] = useState<string>()
   const [showMenu, setMenu] = useState(false);
@@ -36,6 +38,12 @@ function App() {
             <a href="/">
               <img src={LogoIcon}/>
             </a>
+            {!role && 
+              <div className="menu">
+                <a href="/login" style={{color: "var(--green)"}}>Đăng nhập</a>
+                <a href="/register">Đăng ký</a>
+              </div>
+            }
             {role === "Patient" && 
               <div className="menu">
                 <a href="/appointment">Đặt lịch khám</a>
@@ -57,12 +65,13 @@ function App() {
               </div>}
             </div>
           <Routes>
-           {role &&  <Route path="/" element={role === "Patient" ? <Navigate to="/history"/> : role === "Admin" ? <Navigate to="/admin/appointments"/> : <Navigate to="/login"/>}/>}
+            <Route path="/" element={<Home/>}/>
             <Route path="/login" element={<Login setRole={setRole}/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/profile" element={<ProfileForm/>}/>
             <Route path="/appointment" element={<Appointment/>}/>
             <Route path="/success/:id" element={<Success/>}/>
+            <Route path="/doctor/:doctorId" element = {<DoctorDetails/>}/>
             <Route path="/admin/appointments" element={<AppointmentAdmin/>}/>
             <Route path="/admin/doctors" element={<DoctorAdmin/>}/>
             <Route path="/admin/profiles" element={<PatientProfileAdmin/>}/>

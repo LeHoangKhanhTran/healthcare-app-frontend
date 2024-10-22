@@ -13,7 +13,7 @@ const Container = styled.div`
     min-height: 40vh;
     top: 90px;
     left: 8%;
-
+    padding-bottom: 30px;
     .specialty-group {
         display: flex;
         gap: 8px;
@@ -90,7 +90,7 @@ export default function PatientProfileAdmin() {
                         {profiles && profiles.map((profile, i) => {
                             return (
                                 <tr className={i % 2 === 0 ? "first-row" : "second-row"}>
-                                    <td>{profile.fullName}</td>
+                                    <td>{profile.fullname}</td>
                                     <td>{profile.phoneNumber}</td>
                                     <td>{profile.email}</td>
                                     <td>{profile.dateOfBirth}</td>

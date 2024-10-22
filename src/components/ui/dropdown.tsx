@@ -3,7 +3,7 @@ import DropdownItem, { Item } from "./dropdown-item";
 const Wrapper = styled.ul<{top?: string, width?: string}>`
     position: absolute;
     width: ${props => props.width ? props.width : "100%"};;
-    max-height: 105px;
+    max-height: 100px;
     /* display: flex;
     flex-direction: column; */
     background: var(--dropdown-bg-color);
@@ -37,7 +37,7 @@ interface DropdownProps {
 
 export default function Dropdown({ type, itemList, pickHandler, top, width, pickedOption } : DropdownProps) {
     return (
-        <Wrapper top={top} width={width}>
+        <Wrapper top={top} width={width} className="dropdown">
             {type && <label>{type}</label>}
             {itemList && itemList.map((item) => {
                 let picked = JSON.stringify(item.value ? item.value : item.name) === JSON.stringify(pickedOption)

@@ -9,7 +9,7 @@ import axios from "axios";
 import config from "../../Config";
 import { useNavigate } from "react-router-dom";
 export default function Register() {
-    const { control, handleSubmit, getValues } =  useForm<RegisterInput>();
+    const { control, handleSubmit, getValues, formState } =  useForm<RegisterInput>();
     const [openModal, setOpenModal] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ export default function Register() {
     return (
         <Container>
             <div className="form">
-                <RegisterForm control={control} onClick={activateOtp}/>
+                <RegisterForm control={control} onClick={activateOtp} formState={formState} handleSubmit={handleSubmit}/>
             </div>
             <img id="main-img" src={Image}/>
             {openModal && <OtpModal phoneNumber={getValues("phoneNumber")} onClick={handleSubmit(onSubmit)}/>}

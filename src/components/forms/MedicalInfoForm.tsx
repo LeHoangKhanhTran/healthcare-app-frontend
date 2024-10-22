@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import Input from "../ui/input";
 import Textarea from "../ui/textarea";
-import { Control, Controller, ControllerFieldState, ControllerRenderProps, UseFormStateReturn } from "react-hook-form";
-import Button from "../ui/button";
-import { PatientProfile } from "../../pages/Patient/PatientProfile";
+import { Control, Controller } from "react-hook-form";
+import { PatientProfileForm } from "../../pages/Patient/PatientProfile";
 
 const Wrapper = styled.div`
     h2 {
@@ -20,7 +19,7 @@ const Wrapper = styled.div`
     }
 `
 
-export default function PatientProfileForm({ control }: { control: Control<PatientProfile> }) {
+export default function MedicalInfoForm({ control }: { control: Control<PatientProfileForm> }) {
     return (
         <Wrapper>
             <h2>Thông tin y tế</h2>
@@ -30,13 +29,7 @@ export default function PatientProfileForm({ control }: { control: Control<Patie
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                      }: {
-                        field: ControllerRenderProps<PatientProfile, 'insuranceNumber'>,
-                        fieldState: ControllerFieldState,
-                        formState: UseFormStateReturn<PatientProfile>
+                        field               
                       }) => (
                         <Input 
                             {...field}
@@ -51,14 +44,7 @@ export default function PatientProfileForm({ control }: { control: Control<Patie
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                        }: {
-                            field: ControllerRenderProps<PatientProfile, 'allergies'>,
-                            fieldState: ControllerFieldState,
-                            formState: UseFormStateReturn<PatientProfile>
-                        }) => (
+                        field}) => (
                             <Textarea value={field.value} onChange={field.onChange} name="Allergies" labelText="Dị ứng"/>
                         )}
                     />
@@ -67,14 +53,7 @@ export default function PatientProfileForm({ control }: { control: Control<Patie
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                        }: {
-                            field: ControllerRenderProps<PatientProfile, 'currentMedications'>,
-                            fieldState: ControllerFieldState,
-                            formState: UseFormStateReturn<PatientProfile>
-                        }) => (
+                        field}) => (
                             <Textarea value={field.value} onChange={field.onChange} name="CurrentMedications" labelText="Các loại thuốc đang sử dụng"/>
                         )}
                     />
@@ -84,14 +63,7 @@ export default function PatientProfileForm({ control }: { control: Control<Patie
                     control={control}
                     defaultValue=""
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
-                        }: {
-                            field: ControllerRenderProps<PatientProfile, 'pastMedicalHistory'>,
-                            fieldState: ControllerFieldState,
-                            formState: UseFormStateReturn<PatientProfile>
-                        }) => (
+                        field}) => (
                             <Textarea value={field.value} onChange={field.onChange} name="PastMedicalHistory" labelText="Tiền sử bệnh lý"/>
                         )}
                     />

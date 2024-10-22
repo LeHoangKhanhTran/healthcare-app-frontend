@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import Doctor from "../assets/images/doctors/dr-cameron.png";
-import TrashIcon from "../assets/icons/trash-can.svg";
 import StatusBadge from "./ui/status-badge";
 import Button from "./ui/button";
 import { Appointment } from "../types";

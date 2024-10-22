@@ -80,19 +80,20 @@ export default function ProfileForm() {
     const location = useLocation();
     const navigate = useNavigate();
     const profile = location.state as PatientProfile || undefined;
+    console.log(user?.phoneNumber)
     const { handleSubmit, control, setValue, getValues } = useForm<PatientProfileForm>({defaultValues: profile ? {
         fullName: profile.fullname,
         email: profile.email,
         phoneNumber: profile.phoneNumber,
-        dateOfBirth: formatDate(profile.dateOfBirth),
-        gender: 0,
+        dateOfBirth: profile.dateOfBirth,
+        gender: profile.gender,
         address: profile.address,
         occupation: profile.occupation,
         insuranceNumber: profile.insuranceNumber,
         allergies: profile.allergies,
         currentMedications: profile.currentMedications,
         pastMedicalHistory: profile.pastMedicalHistory,
-    } : {gender: 0, userPhoneNumber: user?.phoneNumber, email: user?.email}});
+    } : {gender: 0, phoneNumber: user?.phoneNumber, email: user?.email}});
     const onSubmit = async (data: PatientProfileForm) => {
         console.log(data)
         try {
@@ -102,7 +103,7 @@ export default function ProfileForm() {
             else {
                 await axios.post(`${config.apiUrl}/PatientProfile`, data);
             }
-            navigate("/patient/profile")
+            navigate("/")
         }
         catch(error) {
             console.log(error)

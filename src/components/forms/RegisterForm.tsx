@@ -4,12 +4,18 @@ import PhoneIcon from "../../assets/icons/phone.svg";
 import PasswordIcon from "../../assets/icons/password.svg"
 import Input from "../ui/input";
 import Button from "../ui/button";
-import { Control, Controller, ControllerFieldState, ControllerRenderProps, UseFormStateReturn } from "react-hook-form";
+import { Control, Controller, ControllerFieldState, ControllerRenderProps, FormState, UseFormHandleSubmit, UseFormStateReturn } from "react-hook-form";
 import { RegisterInput } from "../../types";
+import { validateEmail, validatePhoneNumber } from "../../Utils";
 
-
-export default function RegisterForm({control, onClick}: {control: Control<RegisterInput>, onClick: () => void}) {
-    return (
+interface RegisterFormProps {
+  control: Control<RegisterInput>;
+  onClick: () => void;
+  formState: FormState<RegisterInput>;
+  handleSubmit: UseFormHandleSubmit<RegisterInput>;
+}
+export default function RegisterForm({ control, onClick, formState, handleSubmit }: RegisterFormProps) {
+  return (
         <Wrapper>
             <header>
                     <h2>Xin chào,</h2>
@@ -20,10 +26,9 @@ export default function RegisterForm({control, onClick}: {control: Control<Regis
                     name="email"
                     control={control}
                     defaultValue=""
+                    rules={{validate: validateEmail}}
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
+                        field,                                   
                       }: {
                         field: ControllerRenderProps<RegisterInput, 'email'>,
                         fieldState: ControllerFieldState,
@@ -36,6 +41,7 @@ export default function RegisterForm({control, onClick}: {control: Control<Regis
                           labelText="Email"
                           placeholder="john_wales@gmail.com"
                           icon={EmailIcon}
+                          error={formState.errors.email?.message}
                         />
                       )}
                 />
@@ -43,10 +49,9 @@ export default function RegisterForm({control, onClick}: {control: Control<Regis
                     name="phoneNumber"
                     control={control}
                     defaultValue=""
+                    rules={{validate: validatePhoneNumber}}
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
+                        field,                                
                       }: {
                         field: ControllerRenderProps<RegisterInput, 'phoneNumber'>,
                         fieldState: ControllerFieldState,
@@ -59,6 +64,7 @@ export default function RegisterForm({control, onClick}: {control: Control<Regis
                           labelText="Số điện thoại"
                           placeholder="0342 045 334"
                           icon={PhoneIcon}
+                          error={formState.errors.phoneNumber?.message}
                         />
                       )}
                 />
@@ -66,10 +72,9 @@ export default function RegisterForm({control, onClick}: {control: Control<Regis
                     name="password"
                     control={control}
                     defaultValue=""
+                    rules={{ required: 'Mật khẩu phải được cung cấp' }}
                     render={({
-                        field,                    
-                        fieldState: { error },   
-                        formState                
+                        field,                                  
                       }: {
                         field: ControllerRenderProps<RegisterInput, 'password'>,
                         fieldState: ControllerFieldState,
@@ -81,12 +86,13 @@ export default function RegisterForm({control, onClick}: {control: Control<Regis
                           label="password"
                           labelText="Mật khẩu"
                           icon={PasswordIcon}
+                          error={formState.errors.password?.message}
                         />
                       )}
                 />
             </form>
             <footer>
-                <Button onClick={onClick}>Đăng ký</Button>
+                <Button onClick={handleSubmit(onClick)}>Đăng ký</Button>
             </footer>
         </Wrapper>
             

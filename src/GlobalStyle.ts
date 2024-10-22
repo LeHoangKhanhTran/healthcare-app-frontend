@@ -109,6 +109,7 @@ const GlobalStyle = createGlobalStyle`
         img {
             transform: scale(.85);
         }
+        z-index: 100;
     }
 
     .default-logo {
@@ -126,7 +127,7 @@ const GlobalStyle = createGlobalStyle`
         display: flex;
         justify-content: center;
         align-items: center;
-
+        z-index: 1000;
         div {
             max-width: 560px;
         }
@@ -165,6 +166,7 @@ const GlobalStyle = createGlobalStyle`
         height: 100dvh;
         min-height: 100dvh;
         border-radius: 24px 0 0 24px;
+        z-index: 1000;
     }
 
     a {
@@ -214,6 +216,11 @@ const GlobalStyle = createGlobalStyle`
             cursor: pointer;
             color: var(--green)
         }
+    }
+
+    .error {
+        color: var(--red);
+        font-weight: 600;
     }
 `
 

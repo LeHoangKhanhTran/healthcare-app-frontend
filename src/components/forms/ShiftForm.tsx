@@ -6,10 +6,11 @@ import DropdownInput from "../ui/dropdown-input";
 import Input from "../ui/input";
 import Button from "../ui/button";
 import { Controller, ControllerFieldState, ControllerRenderProps, useForm, UseFormStateReturn } from "react-hook-form";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import config from "../../Config";
-import { Doctor, Shift } from "../../types";
+import { Doctor, Shift, ShiftTime } from "../../types";
 import { useEffect, useState } from "react";
+import { parseShifts } from "../../Utils";
 const Container = styled.section`
     width: 100%;
     height: fit-content;
@@ -96,10 +97,6 @@ const weekdays = [
 
 
 
-interface ShiftTime {
-    shiftId: string,
-    time: string
-}
 
 export default function ShiftForm({ pickedDoctor }: { pickedDoctor: Doctor }) {
     const [doctor, setDoctor] = useState<Doctor>(pickedDoctor)
@@ -126,25 +123,9 @@ export default function ShiftForm({ pickedDoctor }: { pickedDoctor: Doctor }) {
             console.log(error)
         }
     }
-    const parseShifts = (shifts: Shift[]) => {
-       if (shifts) {
-        const parsedShifts = shifts.reduce((acc, value) => {
-            if (!acc[getWeekdayName(value.weekday)]) {
-                acc[getWeekdayName(value.weekday)] = []
-            }
-            acc[getWeekdayName(value.weekday)].push({shiftId: value.shiftId, time: `${value.startTime}-${value.finishTime}`});
-            return acc;
-            }, {} as Record<string, ShiftTime[]>);
-            return parsedShifts
-       }
-        return {};
-       
-    }
+    
 
-    const getWeekdayName = (weekday: number): string => {
-        const weekdays = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
-        return weekdays[weekday];
-    };
+   
 
     const toggleShift = (id: string) => {
         if (removeMode) {
@@ -189,7 +170,7 @@ export default function ShiftForm({ pickedDoctor }: { pickedDoctor: Doctor }) {
             });
     
             await axios.all(requests)
-            .then(responses => {
+            .then(() => {
                 setRemovedShifts([]);
                 retrieveDoctor(doctor.doctorId)
             })
@@ -240,10 +221,7 @@ export default function ShiftForm({ pickedDoctor }: { pickedDoctor: Doctor }) {
                 name="startTime"
                 control={control}
                 render={({
-                    field,                    
-                    fieldState: { error },   
-                    formState                
-                    }: {
+                    field}: {
                         field: ControllerRenderProps<Shift, 'startTime'>,
                         fieldState: ControllerFieldState,
                         formState: UseFormStateReturn<Shift>
@@ -258,9 +236,7 @@ export default function ShiftForm({ pickedDoctor }: { pickedDoctor: Doctor }) {
                 name="finishTime"
                 control={control}
                 render={({
-                    field,                    
-                    fieldState: { error },   
-                    formState                
+                    field                
                     }: {
                         field: ControllerRenderProps<Shift, 'finishTime'>,
                         fieldState: ControllerFieldState,
@@ -275,9 +251,7 @@ export default function ShiftForm({ pickedDoctor }: { pickedDoctor: Doctor }) {
                 name="slots"
                 control={control}
                 render={({
-                    field,                    
-                    fieldState: { error },   
-                    formState                
+                    field                
                     }: {
                         field: ControllerRenderProps<Shift, 'slots'>,
                         fieldState: ControllerFieldState,

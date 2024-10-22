@@ -1,7 +1,7 @@
 import styled from "styled-components";
 const Container = styled.div<{icon: string | undefined, disabled: boolean}>`
     width: 100%;
-    height: 42px;
+    /* height: 42px; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -16,7 +16,7 @@ const Container = styled.div<{icon: string | undefined, disabled: boolean}>`
 
     input {
         width: 100%;
-        height: inherit;
+        height: 42px;
         border-radius: 8px;
         padding: ${props => props.icon ? "0px 16px 0px calc(16px + 24px + 5px)" : "0 16px"};
         border: 1.5px solid var(--grey-border-color);
@@ -35,17 +35,13 @@ const Container = styled.div<{icon: string | undefined, disabled: boolean}>`
 
     input:focus-visible {
         width: calc(100% - 6px);
-        height: calc(100% - 6px);
+        height: 36px;
         background: linear-gradient(var(--input-bg-color), var(--input-bg-color)) padding-box, var(--input-focus-color) border-box;
         border: 1px solid transparent;
         outline: 4px solid #84DCF53D;
         transition: background-color 0.2s, border-color 0.2s;
     }
 
-    .error {
-        color: var(--red);
-        font-weight: 500;
-    }
 `
 
 export interface InputProps {

@@ -2,7 +2,6 @@ import { useState } from "react"
 import Dialogue from "../ui/dialogue"
 import Button from "../ui/button"
 import Textarea from "../ui/textarea"
-import styled from "styled-components"
 
 
 export default function CancelModal({ handleClick }: {handleClick: () => void}) {
