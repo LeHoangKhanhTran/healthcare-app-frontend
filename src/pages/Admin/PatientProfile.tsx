@@ -67,6 +67,7 @@ export default function PatientProfileAdmin() {
             console.log(error)
         }
     }
+
     return (
         <Container>
             <section className="search-filter">

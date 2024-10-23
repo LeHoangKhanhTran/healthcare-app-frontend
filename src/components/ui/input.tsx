@@ -1,7 +1,7 @@
 import styled from "styled-components";
 const Container = styled.div<{icon: string | undefined, disabled: boolean}>`
     width: 100%;
-    /* height: 42px; */
+    height: 43px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,6 +25,7 @@ const Container = styled.div<{icon: string | undefined, disabled: boolean}>`
         background: var(--input-bg-color);
         color: var(--white-text-color);
         outline: none;
+        resize: none;
         cursor: ${props => props.disabled ? "pointer" : ""};
     }
 

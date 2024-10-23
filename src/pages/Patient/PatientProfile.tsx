@@ -6,7 +6,7 @@ import MedicalInfoForm from "../../components/forms/MedicalInfoForm";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import config from "../../Config";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { PatientProfile } from "../../types";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../UserContextProvider";
@@ -53,7 +53,7 @@ const Container = styled.div`
     }
 `
 type PersonalInfo = {
-    fullName: string,
+    fullname: string,
     email: string,
     phoneNumber: string,
     dateOfBirth: string,
@@ -73,6 +73,11 @@ export type PatientProfileForm = PersonalInfo & MedicalInfo & {
     userPhoneNumber: string
 };
 
+const genderMap: {[key: string]: 0 | 1 | 2} = {
+    Male: 0,
+    Female: 1,
+    Other: 2
+} 
 
 export default function ProfileForm() {
     const {user, loading} = useUserContext();
@@ -80,13 +85,13 @@ export default function ProfileForm() {
     const location = useLocation();
     const navigate = useNavigate();
     const profile = location.state as PatientProfile || undefined;
-    console.log(user?.phoneNumber)
+
     const { handleSubmit, control, setValue, getValues } = useForm<PatientProfileForm>({defaultValues: profile ? {
-        fullName: profile.fullname,
+        fullname: profile.fullname,
         email: profile.email,
         phoneNumber: profile.phoneNumber,
         dateOfBirth: profile.dateOfBirth,
-        gender: profile.gender,
+        gender: genderMap[profile.gender],
         address: profile.address,
         occupation: profile.occupation,
         insuranceNumber: profile.insuranceNumber,
@@ -94,6 +99,7 @@ export default function ProfileForm() {
         currentMedications: profile.currentMedications,
         pastMedicalHistory: profile.pastMedicalHistory,
     } : {gender: 0, phoneNumber: user?.phoneNumber, email: user?.email}});
+
     const onSubmit = async (data: PatientProfileForm) => {
         console.log(data)
         try {
@@ -106,7 +112,7 @@ export default function ProfileForm() {
             navigate("/")
         }
         catch(error) {
-            console.log(error)
+            console.log((error as AxiosError).response?.data)
         }
     }
     const handleNext = () => {

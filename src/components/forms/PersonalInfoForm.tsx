@@ -39,8 +39,10 @@ const genderMap: {[key: string]: 0 | 1 | 2} = {
     Female: 1,
     Other: 2
 }
+
+const arr = ["Male", "Female", "Other"]
 export default function PersonalInfoForm({ control, setValue, getValues } : { control: Control<PatientProfileForm>, setValue: UseFormSetValue<PatientProfileForm>, getValues?: UseFormGetValues<PatientProfileForm>}) {
-    const [gender, setGender] = useState<string>(getValues && getValues('gender') ? getValues('gender').toString() : "Male");
+    const [gender, setGender] = useState<string>(getValues && getValues('gender') ? arr[getValues('gender')] : "Male");
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
     const [date, setDate] = useState<string>(getValues ? getValues("dateOfBirth") : "");
 
@@ -66,12 +68,12 @@ export default function PersonalInfoForm({ control, setValue, getValues } : { co
             <h2>Thông tin cá nhân</h2>
             <form>
             <Controller
-            name="fullName"
+            name="fullname"
             control={control}
             defaultValue=""
             render={({
                 field}: {
-                    field: ControllerRenderProps<PatientProfileForm, 'fullName'>,
+                    field: ControllerRenderProps<PatientProfileForm, 'fullname'>,
                     fieldState: ControllerFieldState,
                     formState: UseFormStateReturn<PatientProfileForm>
                 }) => (
