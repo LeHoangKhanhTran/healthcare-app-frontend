@@ -65,7 +65,7 @@ export default function Input({ type="text", label, labelText, placeholder="", i
     return (
         <label htmlFor={label} style={{width: "100%"}}>
             {labelText}
-            <Container icon={icon} disabled={disabled}>
+            <Container icon={icon} disabled={disabled} className="input-container">
                 {icon && <img className="icon" src={icon}/>}
                 <input type={type} placeholder={placeholder} name={label} autoComplete="off" readOnly={disabled} value={value} onChange={onChange} onBlur={onBlur} onFocus={onFocus}/>
                 {children}
