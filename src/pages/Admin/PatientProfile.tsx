@@ -90,7 +90,7 @@ export default function PatientProfileAdmin() {
                         {profiles && profiles.map((profile, i) => {
                             return (
                                 <tr className={i % 2 === 0 ? "first-row" : "second-row"}>
-                                    <td>{profile.fullname}</td>
+                                    <td>{profile.fullName}</td>
                                     <td>{profile.phoneNumber}</td>
                                     <td>{profile.email}</td>
                                     <td>{profile.dateOfBirth}</td>
