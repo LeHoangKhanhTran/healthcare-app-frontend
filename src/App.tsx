@@ -62,6 +62,13 @@ function App() {
                 <a href="/admin/appointments">Lịch hẹn khám</a>
                 <a href="/admin/doctors">Bác sĩ</a>
                 <a href="/admin/profiles">Hồ sơ bệnh nhân</a>
+                <section style={{position: "relative"}}>
+                  <img src={UserIcon} alt="user" id="user-icon" onClick={() => setMenu(prev => !prev)}/>
+                  {showMenu && 
+                    <div className="user-menu">
+                      <span onClick={() => {setMenu(prev => !prev); logOut()}}>Đăng xuất</span>
+                    </div>}
+                </section>
               </div>}
             </div>
           <Routes>
