@@ -153,7 +153,7 @@ export default function AppointmentForm({ doctorId }: { doctorId?: string }) {
                 <section className="flex-container">
                     <div style={{flexBasis: "55%"}}>
                         <Input icon={CalendarIcon} label="appointmentDate" labelText="Ngày khám" disabled={true} placeholder="Chọn ngày khám" onFocus={() => {setShowCalendar(true)}} value={date}/>
-                        {showCalendar && <DatePicker handler={updateDate} weekdays={doctor?.shifts.map(item => item.weekday)}/>}
+                        {showCalendar && <DatePicker handler={updateDate} weekdays={doctor?.shifts.map(item => item.weekday)} pastDisabled={true}/>}
                     </div>
                     <div style={{flexBasis: "45%"}}>
                         <DropdownInput items={getAppointmentTime()} icon={ClockIcon} type="Thời gian khám" label="appointmentTime" labelText="Thời gian khám" placeholder="Chọn giờ khám" disabled={true} handlePick={(value: any) => setValue("appointmentTime", value)}/>

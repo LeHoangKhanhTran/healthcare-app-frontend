@@ -27,6 +27,10 @@ const Wrapper = styled.main`
     width: 100%;
     min-height: 100dvh;
 
+    .input-container {
+        height: 56px;
+    }
+    
     .dropdown-input input {
         font-size: 16px;
         height: 50px;
