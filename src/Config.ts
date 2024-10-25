@@ -1,5 +1,4 @@
 const config = {
-    apiUrl: 'https://localhost:7050/api'
-    // apiUrl: 'https://healthappapi.azurewebsites.net/api'
+    apiUrl: import.meta.env.VITE_API_URL
 }
 export default config;
