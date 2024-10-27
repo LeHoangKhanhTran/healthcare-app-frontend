@@ -86,7 +86,12 @@ export default function DropdownInput<T>({ type, icon, labelText, placeholder, d
     useEffect(() => {
         if (ref.current) {
             setRect(ref.current.getBoundingClientRect()); 
+            window.addEventListener('resize', () => setRect(ref.current?.getBoundingClientRect()));
         }
+
+        return () => {
+          window.removeEventListener('resize', () => setRect(ref.current?.getBoundingClientRect()));
+        };
     }, []);
 
     const getInputValue: (value: any) => any = (value: any) => {
