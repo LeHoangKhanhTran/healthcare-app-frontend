@@ -194,7 +194,7 @@ export default function AppointmentAdmin() {
             <section className="filter">
                 <p>Lọc theo:</p>
                 <div>
-                    <DropdownInput type="Thứ tự" items={timeOrder} label="appointmentTime" labelText="Thời gian đặt khám" disabled={true} handlePick={(value: any) => {setOrder(value)}} value="desc" removeValue={filterRemoved}/>
+                    <DropdownInput type="Thứ tự" items={timeOrder} label="appointmentTime" labelText="Thời gian đặt khám" disabled={true} handlePick={(value: any) => {setOrder(value)}} value={{name: "Gần đây nhất", value: "desc"}} removeValue={filterRemoved}/>
                 </div>
                 <div>
                     <DropdownInput type="Tình trạng" items={status} label="appointmentStatus" labelText="Tình trạng lịch khám" disabled={true} handlePick={(value: any) => {setStatusFilter(value)}} placeholder="Chọn tình trạng" removeValue={filterRemoved}/>

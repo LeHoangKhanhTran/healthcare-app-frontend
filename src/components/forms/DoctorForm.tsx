@@ -66,7 +66,7 @@ export type DoctorInfo = {
 
 
 export default function DoctorForm({ doctor, onClick }: { doctor?: Doctor, onClick: () => void}) {
-    const [specialties, setSpecialties] = useState<string[]>([]);
+    const [specialties, setSpecialties] = useState<string[]>( doctor && doctor.specialties ? doctor.specialties : []);
     const { handleSubmit, control, setValue } = useForm<DoctorInfo>({
         defaultValues: doctor ? {
         name: doctor.name,
@@ -74,9 +74,11 @@ export default function DoctorForm({ doctor, onClick }: { doctor?: Doctor, onCli
         doctorInfo: doctor.doctorInfo}      
         : {}
     });
+
     const handleSpecialties = (value: string) => {
-        setSpecialties([...specialties, value])
-        setValue('specialties', [...specialties, value])
+        const newSpecialties = doctor && doctor.specialties ? [...doctor.specialties, value] : [...specialties, value]
+        setSpecialties(newSpecialties)
+        setValue('specialties', newSpecialties)
     }
 
     const getSpecialtyUrl = (searchTerm: string) => {
@@ -130,14 +132,9 @@ export default function DoctorForm({ doctor, onClick }: { doctor?: Doctor, onCli
                 <section>
                     <DropdownInput icon={SearchIcon} type="Chuyên khoa" label="Specialty" labelText="Chuyên khoa"
                     getListUrl={getSpecialtyUrl} 
-                    transformFunction={(list: Specialty[]) => {return list.map((item) => {return {name: item.name}})}}
+                    transformFunction={(list: Specialty[]) => {return list.map((item) => {return {name: item.name, value: item.name}})}}
                     handlePick={(value: string) => handleSpecialties(value)}/>
                         <div className="flex-container specialties">
-                            {doctor && doctor.specialties.map(specialty => {
-                                return (
-                                    <ItemCard name={specialty}/>
-                                )
-                            })}
                             {specialties.map((item) => {
                                 return (
                                     <ItemCard name={item}/>

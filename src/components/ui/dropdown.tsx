@@ -27,7 +27,7 @@ const Wrapper = styled.ul<{top?: string, width?: string}>`
 interface DropdownProps {
     type: string,
     itemList: Item[],
-    pickHandler: () => void,
+    pickHandler: (value: any) => void,
     top?: string,
     width?: string,
     pickedOption: any,

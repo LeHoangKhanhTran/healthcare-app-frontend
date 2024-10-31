@@ -36,6 +36,8 @@ interface DoctorItem {
     img: string,
     value: string
 }
+
+
 export default function DropdownInput<T>({ type, icon, labelText, placeholder, disabled, handlePick, getListUrl, transformFunction, items, value, removeValue } : DropdownInputProps<T>) {
     const ref = useRef<HTMLImageElement | null>(null);
     const [rect, setRect] = useState<DOMRect | undefined>(ref.current?.getBoundingClientRect());
@@ -60,6 +62,7 @@ export default function DropdownInput<T>({ type, icon, labelText, placeholder, d
     useEffect(() => {
         if (removeValue) setValue(value ? value : "")
     }, [removeValue])
+
     const getItemList = async (transformFunc?: (list: T[]) => Item[]) => {
         try {
             if (!getListUrl) {
@@ -95,15 +98,11 @@ export default function DropdownInput<T>({ type, icon, labelText, placeholder, d
     }, []);
 
     const getInputValue: (value: any) => any = (value: any) => {
-        if (type === "Bác sĩ") return searchTerm
-        if ((type === "Loại tài liệu" || type === "Thứ" || type === "Tình trạng" || type === "Thứ tự") && itemList && value !== undefined && value !== null) {
-            let target = itemList?.filter((item) => (item as Item).value === value)[0];
-            return target ? (target as Item).name : ""
-        }
-        return value;
+        if (type === "Bác sĩ") return searchTerm       
+        if (value) return (value as Item).name;
     } 
-    const handler = (value? : any) => {
-        handlePick(value, list)
+    const handler = (value : any) => {
+        handlePick((value as Item).value, list)
         setValue(value)
     }
     const CloseDropdown = () => {
@@ -117,19 +116,11 @@ export default function DropdownInput<T>({ type, icon, labelText, placeholder, d
             setShouldDisable(true)
         }
     }
-
-    const getDoctorItem = () => {
-        if (itemList) {
-            const doctor = (itemList as DoctorItem[]).filter((item) => item.value === pickedValue)
-            if (doctor && doctor.length > 0) return {name: doctor[0].name, img: doctor[0].img}
-        }
-        return {name: "", img: ""}
-    }
     return (
         <Wrapper className="dropdown-input" ref={ref}>
             <Input icon={icon} labelText={labelText} placeholder={type !== "Bác sĩ" || !pickedValue ? placeholder : ""} disabled={shouldDisable} 
             value={getInputValue(pickedValue)} onChange={(e) => {setTerm(e.target.value)}} onFocus={handleFocus} onBlur={CloseDropdown}>
-                {type === "Bác sĩ" && pickedValue && getDoctorItem().name && <ItemCard name={getDoctorItem().name} img={getDoctorItem().img}/>}
+                {type === "Bác sĩ" && pickedValue  && <ItemCard name={pickedValue.name} img={pickedValue.img}/>}
                 <img className="chevron-icon" src={ChevronIcon} style={{rotate: open ? "180deg" : ""}}/>
             </Input>
             {open && itemList && <Dropdown type={type} itemList={itemList} pickHandler={handler} top={`0px`} width={`${rect?.width}px`} pickedOption={[pickedValue]}/>}

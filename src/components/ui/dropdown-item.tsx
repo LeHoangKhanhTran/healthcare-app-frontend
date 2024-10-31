@@ -48,7 +48,7 @@ const ItemWrapper = styled.li<{picked: boolean}>`
 
 export default function DropDownItem({ item, onClick, picked } : { item: Item, onClick: (value?: any, list?: any[]) => void, picked: boolean }) {
     const handleClick = () => {
-        onClick(item.value !== undefined && item.value !== null ? item.value : item.name)
+        onClick(item)
     }
 
      return (

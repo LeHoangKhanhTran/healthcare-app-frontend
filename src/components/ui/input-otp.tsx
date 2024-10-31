@@ -29,7 +29,6 @@ const OtpSlotGroup = styled.div`
 export default function InputOtp({ otp, setOtp }: { otp: string, setOtp: (value: string) => void}) {
 
     const [currentIndex, setIndex] = useState<number>(0);
-    console.log(currentIndex)
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
         if (e.key === "Backspace") {
             let updatedOtp = "";

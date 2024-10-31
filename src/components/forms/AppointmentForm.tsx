@@ -46,16 +46,15 @@ const Wrapper = styled.div`
     }
 `
 
-export default function AppointmentForm({ doctorId }: { doctorId?: string }) {
+export default function AppointmentForm({ defaultDoctor }: { defaultDoctor?: Doctor }) {
     const { user, loading } = useUserContext();
     const { handleSubmit, control, setValue } = useForm<FormAppointment>({defaultValues: {patientId: "3c69e909-380d-4ae8-aa47-2d60379728fc"}});
     const [specialty, setSpecialty] = useState<string>();
-    const [doctor, setDoctor] = useState<Doctor>();
+    const [doctor, setDoctor] = useState<Doctor | undefined>(defaultDoctor);
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
     const [date, setDate] = useState<string>();
     const [weekday, setWeekday] = useState<number>();
     const navigate = useNavigate();
-    console.log(doctorId)
     const getSpecialtyUrl = (searchTerm: string) => {
         return `${config.apiUrl}/Specialty${searchTerm ? `?SpecialtyName=${searchTerm}` : ''}`
     }
@@ -110,6 +109,7 @@ export default function AppointmentForm({ doctorId }: { doctorId?: string }) {
             }
         }
     }, [loading])
+    console.log(doctor?.shifts.map(item => item.weekday))
     return (
         <Wrapper>
             <header>
@@ -118,10 +118,10 @@ export default function AppointmentForm({ doctorId }: { doctorId?: string }) {
             <main>
                  <DropdownInput getListUrl={getSpecialtyUrl} icon={SearchIcon} type="Chuyên khoa" label="Specialty" 
                 labelText="Chuyên khoa" placeholder="Chọn chuyên khoa" handlePick={(value: string) => setSpecialty(value)}
-                transformFunction={(list: Specialty[]) => {return list.map((item) => {return {name: item.name}})}}/> 
+                transformFunction={(list: Specialty[]) => {return list.map((item) => {return {name: item.name, value: item.name}})}}/> 
                  <DropdownInput getListUrl={getDoctorUrl} icon={SearchIcon} type="Bác sĩ" label="Doctor" labelText="Bác sĩ" 
                 placeholder="Chọn bác sĩ" transformFunction={(list: Doctor[]) => {return list.map(item => {return {name: item.name, img: item.imageUrl, value: item.doctorId}})}}
-                handlePick={handlePickDoctor} value={doctorId ? doctorId : undefined}/>
+                handlePick={handlePickDoctor} value={defaultDoctor ? {name: defaultDoctor.name, img: defaultDoctor.imageUrl, value: defaultDoctor.doctorId} : undefined}/>
                 <section className="flex-container">
                     <Controller
                     name="reason"

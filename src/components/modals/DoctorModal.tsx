@@ -3,7 +3,7 @@ import Dialogue from "../ui/dialogue"
 import DoctorForm from "../forms/DoctorForm"
 import { Doctor } from "../../types"
 
-export default function DoctorModal({doctor, handleClose, sideTask}: {doctor?: Doctor, handleClose?: () => void, sideTask: Promise<void>}) {
+export default function DoctorModal({doctor, handleClose, sideTask}: {doctor?: Doctor, handleClose?: () => void, sideTask: () =>  Promise<void>}) {
     const [open, setOpen] = useState<boolean>(true);
     const onClick = () => {
         setOpen(false);
@@ -15,7 +15,7 @@ export default function DoctorModal({doctor, handleClose, sideTask}: {doctor?: D
                 <div className="shade"></div>
                 <div className="modal-center">
                     <Dialogue title="Thông tin bác sĩ" closeHandler={onClick}>
-                       <DoctorForm doctor={doctor} onClick={async () => {await sideTask; setOpen(false)}}/>
+                       <DoctorForm doctor={doctor} onClick={async () => {await sideTask(); setOpen(false)}}/>
                     </Dialogue>
                 </div>
             </>

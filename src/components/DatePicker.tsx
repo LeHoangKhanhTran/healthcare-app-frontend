@@ -80,7 +80,7 @@ export default function DatePicker({ handler, weekdays=[], pastDisabled=false } 
     }
  
   };
-
+  console.log(weekdays)
   const shouldDisabled = (date: Dayjs) => {
     let day = date.day();
     return weekdays.length > 0 && !weekdays.includes(day)

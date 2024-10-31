@@ -22,12 +22,15 @@ const Container = styled.div`
     padding-bottom: 30px;
     .specialty-group {
         display: flex;
+        flex-wrap: wrap;
         gap: 8px;
         min-width: fit-content;
-
+        width: 170px;
         .item-card {
             min-width: fit-content;
         }
+
+        
     }
 
     .table {
@@ -94,13 +97,9 @@ const Container = styled.div`
         width: 143px;
     }
 
-   
-
     .search-filter input{
         width: 250px;
     }
-
-
 `
 
 export default function DoctorAdmin() {
@@ -144,6 +143,8 @@ export default function DoctorAdmin() {
         setSpecialty("");
         setFilterRemoved(true)
     }
+
+
     return (
         <Container>
             <section className="search-filter">
@@ -155,7 +156,7 @@ export default function DoctorAdmin() {
                         <p>Lọc theo:</p>
                         <DropdownInput icon={SearchIcon} type="Chuyên khoa" label="Specialty" labelText="Chuyên khoa"
                         getListUrl={getSpecialtyUrl} 
-                        transformFunction={(list: Specialty[]) => {return list.map((item) => {return {name: item.name}})}}
+                        transformFunction={(list: Specialty[]) => {return list.map((item) => {return {name: item.name, value: item.name}})}}
                         handlePick={(value: string) => setSpecialty(value)} removeValue={filterRemoved}/>
                     </div>
                     <Button type="danger" onClick={removeFilter}>Bỏ lọc</Button>
@@ -187,6 +188,7 @@ export default function DoctorAdmin() {
                                             {doctor.specialties && doctor.specialties.map((specialty) => {
                                                 return (
                                                     <ItemCard name={specialty}/>
+                                                    
                                                 )
                                             })}
                                         </div>
@@ -207,8 +209,8 @@ export default function DoctorAdmin() {
                     </tbody>
                 </Table>
             </section>
-            {modal === "doctor" && !doctor && <DoctorModal handleClose={() => {setModal(""); getDoctors()}} sideTask={getDoctors()}/>}
-            {modal === "doctor" && doctor && <DoctorModal doctor={doctor} handleClose={() => {setModal("")}} sideTask={getDoctors()}/>}
+            {modal === "doctor" && doctor && <DoctorModal doctor={doctor} handleClose={() => {setModal("")}} sideTask={getDoctors}/>}
+            {modal === "doctor" && !doctor && <DoctorModal doctor={doctor} handleClose={() => {setModal("")}} sideTask={getDoctors}/>}
             {modal === "shifts" && doctor && <ShiftModal doctor={doctor} handleClose={() => setModal("")}/>}
         </Container>
     )

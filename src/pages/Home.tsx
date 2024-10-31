@@ -125,8 +125,8 @@ export default function Home() {
         }
     }
 
-    const handleClick = (doctorId: string) => {
-        navigate("/appointment", {state: doctorId})
+    const handleClick = (doctor: Doctor) => {
+        navigate("/appointment", {state: doctor})
     }
 
     const handlePick = (value: string) => {
@@ -150,7 +150,7 @@ export default function Home() {
                                         <p className="name">{doctor.name}</p>
                                         <p className="info">{doctor.doctorInfo}</p>
                                     </div>
-                                    <Button onClick={() => handleClick(doctor.doctorId)}>Đặt lịch ngay</Button>
+                                    <Button onClick={() => handleClick(doctor)}>Đặt lịch ngay</Button>
                                 </div>
                             )
                         })}

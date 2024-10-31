@@ -2,6 +2,7 @@ import styled from "styled-components";
 import AppointmentImg from "../../assets/images/appointment-img.png"
 import AppointmentForm from "../../components/forms/AppointmentForm";
 import { useLocation } from "react-router-dom";
+import { Doctor } from "../../types";
 const Container = styled.div`
     .form {
         position: absolute;
@@ -14,11 +15,11 @@ const Container = styled.div`
 
 export default function Appointment() {
     const location = useLocation();
-    const doctorId = location.state as string;
+    const doctor = location.state as Doctor;
     return (
         <Container>
             <div className="form">
-                <AppointmentForm doctorId={doctorId}/>
+                <AppointmentForm defaultDoctor={doctor}/>
             </div>
             <img src={AppointmentImg} id="main-img" />
         </Container>
