@@ -31,11 +31,6 @@ interface DropdownInputProps<T> extends InputProps {
     removeValue?: boolean
 }
 
-interface DoctorItem {
-    name: string,
-    img: string,
-    value: string
-}
 
 
 export default function DropdownInput<T>({ type, icon, labelText, placeholder, disabled, handlePick, getListUrl, transformFunction, items, value, removeValue } : DropdownInputProps<T>) {
