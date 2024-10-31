@@ -156,7 +156,7 @@ export default function AppointmentForm({ defaultDoctor }: { defaultDoctor?: Doc
                         {showCalendar && <DatePicker handler={updateDate} weekdays={doctor?.shifts.map(item => item.weekday)} pastDisabled={true}/>}
                     </div>
                     <div style={{flexBasis: "45%"}}>
-                        <DropdownInput items={getAppointmentTime()} icon={ClockIcon} type="Thời gian khám" label="appointmentTime" labelText="Thời gian khám" placeholder="Chọn giờ khám" disabled={true} handlePick={(value: any) => setValue("appointmentTime", value)}/>
+                        <DropdownInput transformFunction={(list: {name: string}[]) => {return list.map(item => {return {name: item.name,  value: item.name}})}} items={getAppointmentTime()} icon={ClockIcon} type="Thời gian khám" label="appointmentTime" labelText="Thời gian khám" placeholder="Chọn giờ khám" disabled={true} handlePick={(value: any) => setValue("appointmentTime", value)}/>
                     </div>     
                 </section>
             </main>

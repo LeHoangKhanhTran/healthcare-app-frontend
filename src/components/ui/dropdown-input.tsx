@@ -97,7 +97,7 @@ export default function DropdownInput<T>({ type, icon, labelText, placeholder, d
         if (value) return (value as Item).name;
     } 
     const handler = (value : any) => {
-        handlePick((value as Item).value, list)
+        handlePick((value as Item).value ? (value as Item).value : (value as Item).name, list)
         setValue(value)
     }
     const CloseDropdown = () => {
