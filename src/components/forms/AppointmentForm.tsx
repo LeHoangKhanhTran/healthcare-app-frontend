@@ -59,7 +59,7 @@ export default function AppointmentForm({
 }) {
   const { user, loading } = useUserContext();
   const { handleSubmit, control, setValue } = useForm<FormAppointment>({
-    defaultValues: { patientId: "3c69e909-380d-4ae8-aa47-2d60379728fc" },
+    defaultValues: { patientId: "3c69e909-380d-4ae8-aa47-2d60379728fc", doctorId: defaultDoctor ? defaultDoctor.doctorId : "" },
   });
   const [specialty, setSpecialty] = useState<string>();
   const [doctor, setDoctor] = useState<Doctor | undefined>(defaultDoctor);
@@ -72,6 +72,7 @@ export default function AppointmentForm({
       searchTerm ? `?SpecialtyName=${searchTerm}` : ""
     }`;
   };
+  console.log(doctor)
   const getDoctorUrl = (searchTerm: string) => {
     return `${config.apiUrl}/Doctor${searchTerm || specialty ? "?" : ""}${
       searchTerm ? `Name=${encodeURIComponent(searchTerm)}` : ""
@@ -82,15 +83,15 @@ export default function AppointmentForm({
 
   const onSubmit = async (data: FormAppointment) => {
     console.log(data);
-    try {
-      const response = await axios.post(`${config.apiUrl}/Appointment`, data);
-      if (response.status === 200) {
-        const id = (response.data as { appointmentId: string }).appointmentId;
-        navigate(`/success/${id}`);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const response = await axios.post(`${config.apiUrl}/Appointment`, data);
+    //   if (response.status === 200) {
+    //     const id = (response.data as { appointmentId: string }).appointmentId;
+    //     navigate(`/success/${id}`);
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const hideCalendar = () => {
