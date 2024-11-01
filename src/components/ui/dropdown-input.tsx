@@ -107,7 +107,7 @@ export default function DropdownInput<T>({
   }, []);
 
   const getInputValue: (value: any) => any = (value: any) => {
-    if (type === "Bác sĩ" && !pickedValue) return searchTerm;
+    if (type === "Bác sĩ" || type === "Chuyên khoa" && !value) return searchTerm;
     if (type !== "Bác sĩ" && value) return (value as Item).name;
   };
   const handler = (value: any) => {
