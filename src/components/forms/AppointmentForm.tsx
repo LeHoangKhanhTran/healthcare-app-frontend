@@ -83,15 +83,15 @@ export default function AppointmentForm({
 
   const onSubmit = async (data: FormAppointment) => {
     console.log(data);
-    // try {
-    //   const response = await axios.post(`${config.apiUrl}/Appointment`, data);
-    //   if (response.status === 200) {
-    //     const id = (response.data as { appointmentId: string }).appointmentId;
-    //     navigate(`/success/${id}`);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      const response = await axios.post(`${config.apiUrl}/Appointment`, data);
+      if (response.status === 200) {
+        const id = (response.data as { appointmentId: string }).appointmentId;
+        navigate(`/success/${id}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const hideCalendar = () => {
